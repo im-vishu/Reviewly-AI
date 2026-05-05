@@ -15,7 +15,7 @@ Reviewly AI is a modern, full-stack **AI-assisted code review** web app with a p
 ### 🏠 Landing Page
 
 <p align="center">
-  <img src="src/assets/screenshots/landing.png" alt="Reviewly AI Landing Page" width="900" />
+  <img src="src/assets/screenshots/landingpage.png" alt="Reviewly AI Landing Page" width="900" />
 </p>
 
 <br/>
@@ -31,7 +31,7 @@ Reviewly AI is a modern, full-stack **AI-assisted code review** web app with a p
 ### 🔍 Review Details
 
 <p align="center">
-  <img src="src/assets/screenshots/review.png" alt="Reviewly AI Review Details" width="900" />
+  <img src="src/assets/screenshots/reviewdetails.png" alt="Reviewly AI Review Details" width="900" />
 </p>
 
 ---
