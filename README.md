@@ -1,112 +1,143 @@
-# Reviewly AI - AI Code Review Automation Platform ⚡
+# Reviewly AI
 
-Reviewly AI is a modern, full-stack **AI-assisted code review** web app with a polished dashboard, protected workspaces, review history, rule-based issue detection, and Supabase-powered authentication/database workflows - built with **React + TypeScript + Vite**.
+Reviewly AI is a full-stack AI-assisted code review workspace built with React, TypeScript, Vite, Tailwind CSS, Supabase, and a lightweight Node backend. The app gives teams a fast dashboard for launching reviews, saving reports, tracking review history, and preparing repository-based review workflows.
 
-🌐 **Live Demo:** Coming soon  
-📦 **Repository:** https://github.com/im-vishu/Reviewly-AI
+Live demo: Coming soon  
+Repository: https://github.com/im-vishu/Reviewly-AI
 
----
+## Screenshots
 
-## 📸 Screenshots
-
-### 🏠 Landing Page
+### Landing Page
 
 <p align="center">
-  <img src="src/assets/screenshots/landingpage.png" alt="Reviewly AI Landing Page" width="900" />
+  <img src="frontend/src/assets/screenshots/landingpage.png" alt="Reviewly AI landing page" width="900" />
 </p>
 
-<br/>
-
-### 📊 Dashboard
+### Dashboard
 
 <p align="center">
-  <img src="src/assets/screenshots/dashboard.png" alt="Reviewly AI Dashboard" width="900" />
+  <img src="frontend/src/assets/screenshots/dashboard.png" alt="Reviewly AI dashboard" width="900" />
 </p>
 
-<br/>
-
-### 🔍 Review Details
+### Review Details
 
 <p align="center">
-  <img src="src/assets/screenshots/reviewdetails.png" alt="Reviewly AI Review Details" width="900" />
+  <img src="frontend/src/assets/screenshots/reviewdetails.png" alt="Reviewly AI review details" width="900" />
 </p>
 
----
+## Features
 
-## ✨ Features
+- Supabase email/password authentication flows
+- Protected dashboard shell with responsive sidebar navigation
+- Lovable/Bolt-style dashboard for launching review work quickly
+- Backend analysis API with a browser-side fallback analyzer
+- Code review creation by pasting source code
+- Rule-based issue detection for hardcoded secrets, `eval`, console logs, unsafe HTML assignment, and swallowed exceptions
+- Review details page with Monaco Editor read-only code views
+- Review history with search, sorting, and incremental loading
+- Profile management with Supabase-backed profile updates
+- Repository, team, and notification workspace pages
+- Markdown export for review reports
+- Supabase RLS migrations for per-user and team-scoped data access
 
-- 🔐 **Authentication-ready flows** with Supabase email/password and OAuth UI
-- 🧭 **Protected dashboard shell** with responsive sidebar navigation
-- 📝 **Create new code reviews** by pasting source code
-- 🧠 **Built-in analyzer** for common security, reliability, and quality issues
-- 🚨 **Issue detection** for hardcoded secrets, `eval`, console logs, unsafe HTML assignment, and swallowed exceptions
-- 📄 **Review details page** with Monaco Editor read-only code views
-- 📚 **Review history** with search, sorting, and infinite-scroll style loading
-- 👤 **Profile management** with Supabase-backed profile updates
-- 🧩 **Workspace pages** for repositories, teams, rules, settings, and notifications
-- 📤 **Markdown export** for review reports
-- 🛡️ **Supabase RLS migrations** for secure per-user and team-scoped data access
+## Tech Stack
 
----
+- React 18
+- TypeScript
+- Vite
+- Tailwind CSS
+- React Router
+- Supabase
+- Node HTTP backend
+- Monaco Editor
+- ESLint
+- Lucide React
 
-## 🧰 Tech Stack
-
-- ⚛️ **React 18**
-- 🟦 **TypeScript**
-- ⚡ **Vite**
-- 🎨 **Tailwind CSS**
-- 🧭 **React Router**
-- 🗄️ **Supabase**
-- 🧑‍💻 **Monaco Editor**
-- ✅ **ESLint**
-- 🎯 **Lucide React**
-
----
-
-## 🗂️ Project Structure
+## Project Structure
 
 ```text
 .
-├─ .github/             # GitHub workflows and templates
-├─ src/
-│  ├─ components/
-│  │  ├─ layout/        # App layout and navigation
-│  │  └─ ui/            # Shared UI components
-│  ├─ contexts/         # Auth provider
-│  ├─ lib/              # Supabase client, analyzer, validation, constants
-│  ├─ pages/            # Route-level pages
-│  ├─ types/            # Shared TypeScript models
-│  ├─ App.tsx           # Route configuration
-│  └─ main.tsx          # React entry point
-├─ supabase/
-│  └─ migrations/       # Database schema and RLS policies
-├─ index.html
-├─ package.json
-├─ tailwind.config.js
-├─ vite.config.ts
-└─ ...
+|-- .github/              # GitHub workflows and templates
+|-- frontend/
+|   |-- src/
+|   |   |-- components/   # App layout and shared UI
+|   |   |-- contexts/     # Auth provider
+|   |   |-- lib/          # Supabase client, analyzer, API bridge, validation
+|   |   |-- pages/        # Route-level pages
+|   |   `-- types/        # Shared TypeScript models
+|   |-- index.html
+|   |-- vite.config.ts
+|   |-- tailwind.config.js
+|   `-- .env.example
+|-- backend/
+|   |-- index.mjs         # Local backend API for review analysis
+|   `-- supabase/
+|       `-- migrations/   # Database schema and RLS policies
+|-- package.json
+`-- README.md
 ```
 
----
+## System Architecture
 
-## 🔐 Environment Variables
+```mermaid
+flowchart LR
+  User["User"] --> Browser["React + Vite frontend"]
+  Browser --> Auth["Supabase Auth"]
+  Browser --> DB["Supabase Postgres + RLS"]
+  Browser --> API["Node backend API"]
+  API --> Analyzer["Review analyzer"]
+  Analyzer --> API
+  API --> Browser
+  Browser --> Reports["Review details, history, dashboard"]
+  DB --> Reports
+```
 
-Create a `.env` file in the project root:
+### Runtime Flow
+
+1. The user signs in through Supabase Auth.
+2. The protected React app loads dashboard, history, repository, team, and notification data from Supabase.
+3. New review submissions call `VITE_REVIEW_API_URL/api/reviews/analyze`.
+4. The backend analyzes the code and returns issues, score, summary, and safe fixed-code suggestions.
+5. The frontend stores the review and issue rows in Supabase under the authenticated user.
+6. Realtime Supabase subscriptions refresh dashboard review data.
+
+### Backend API
+
+The backend is intentionally small and dependency-free so it can run locally without adding a heavy server framework.
+
+```text
+GET  /api/health
+POST /api/reviews/analyze
+```
+
+Request body for analysis:
+
+```json
+{
+  "language": "javascript",
+  "code": "console.log('hello')"
+}
+```
+
+The frontend uses `frontend/src/lib/reviewApi.ts`. If `VITE_REVIEW_API_URL` is missing or the backend is unavailable, it falls back to the local browser analyzer in `frontend/src/lib/analyzer.ts`.
+
+## Environment Variables
+
+Create a `.env` file in `frontend/`:
 
 ```env
 VITE_SUPABASE_URL=your_supabase_project_url
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+VITE_REVIEW_API_URL=http://127.0.0.1:8787/api
 ```
 
-✅ `.env` is ignored by git - **do not commit secrets**.
+`frontend/.env` is ignored by git. Do not commit secrets.
 
-> Public pages can render without Supabase values, but authentication, profile updates, review creation, history, notifications, and workspace data require a configured Supabase project.
+Public pages can render without Supabase values, but authentication, profile updates, review creation, history, notifications, and workspace data require a configured Supabase project.
 
----
+## Supabase Setup
 
-## 🗄️ Supabase Setup
-
-Apply the migration files in `supabase/migrations` in order:
+Apply the migration files in `backend/supabase/migrations` in order:
 
 ```text
 20260425054649_create_codelens_base_tables.sql
@@ -114,52 +145,43 @@ Apply the migration files in `supabase/migrations` in order:
 20260427054501_add_audit_logs_and_session_mgmt.sql
 ```
 
-These migrations create:
+These migrations create profiles, teams, team members, reviews, review issues, connected repositories, pull request review metadata, custom rules, user settings, notifications, API keys, audit logs, and row-level security policies.
 
-- Profiles
-- Teams and team members
-- Reviews and review issues
-- Connected repositories
-- Pull request review metadata
-- Custom rules
-- User settings
-- Notifications
-- API keys
-- Audit logs
-- Row-level security policies
+## Setup & Development
 
----
+### Prerequisites
 
-## 🚀 Setup & Development
+- Node.js >= 18
+- npm >= 9
+- Supabase project for full app functionality
 
-### ✅ Prerequisites
-
-- Node.js **>= 18**
-- npm **>= 9**
-- Supabase project for full backend functionality
-
-### 1) Clone the repository
-
-```bash
-git clone https://github.com/im-vishu/Reviewly-AI.git
-cd Reviewly-AI
-```
-
-### 2) Install dependencies
+### 1. Install dependencies
 
 ```bash
 npm install
 ```
 
-### 3) Configure environment variables
+### 2. Configure environment variables
 
 ```bash
-cp .env.example .env
+copy frontend\.env.example frontend\.env
 ```
 
-Then update `.env` with your Supabase project values.
+Then update `frontend/.env` with your Supabase project values.
 
-### 4) Run locally
+### 3. Run the backend
+
+```bash
+npm run backend
+```
+
+The API runs at:
+
+```text
+http://127.0.0.1:8787
+```
+
+### 4. Run the frontend
 
 ```bash
 npm run dev
@@ -171,9 +193,7 @@ Open:
 http://127.0.0.1:5173
 ```
 
----
-
-## 🧪 Quality Checks
+## Quality Checks
 
 ```bash
 npm run typecheck
@@ -183,14 +203,11 @@ npm run build
 
 Current known state:
 
-- ✅ TypeScript passes
-- ✅ Production build passes
-- ⚠️ ESLint passes with warnings only
-- ⚠️ `npm audit` reports remaining dependency advisories
+- TypeScript passes
+- Production build passes
+- ESLint passes
 
----
-
-## 🧭 Routes
+## Routes
 
 ### Public Routes
 
@@ -201,76 +218,68 @@ Current known state:
 
 ### Protected Routes
 
-- `/dashboard` - Review overview and recent reviews
+- `/dashboard` - AI review workspace and recent reviews
 - `/profile` - Account profile
 - `/history` - Review history
 - `/review/new` - Create a new review
 - `/review/:id` - Review details
 - `/repos` - Connected repositories
 - `/teams` - Teams
-- `/rules` - Review rules
-- `/settings` - User settings
 - `/notifications` - User notifications
 
----
+## Analyzer Notes
 
-## 🧠 Analyzer Notes
-
-The current analyzer is implemented in:
+The shared browser analyzer is implemented in:
 
 ```text
-src/lib/analyzer.ts
+frontend/src/lib/analyzer.ts
 ```
 
-It runs locally and detects a focused set of common problems:
+The local backend analyzer is implemented in:
 
-- Hardcoded secrets
-- `eval` usage
-- Console statements
-- Swallowed exceptions
-- Unsafe `innerHTML` assignment
+```text
+backend/index.mjs
+```
 
-For production-grade AI review, move analysis to a secure backend or Supabase Edge Function and call your LLM provider there. Do not expose private provider keys in the browser.
+For production-grade AI review, keep provider keys on the backend or in Supabase Edge Functions. Do not expose private LLM provider keys in the browser.
 
----
+## Deploying
 
-## ☁️ Deploying
+This Vite app can be deployed to platforms like Vercel, Netlify, or Cloudflare Pages. The Node backend can be deployed separately to a Node-capable host.
 
-This Vite app can be deployed to platforms like **Vercel**, **Netlify**, or **Cloudflare Pages**.
+Recommended frontend settings:
 
-### Recommended Vercel Settings
-
-- **Build Command:** `npm run build`
-- **Output Directory:** `dist`
-- **Install Command:** `npm install`
+- Build Command: `npm run build`
+- Output Directory: `frontend/dist`
+- Install Command: `npm install`
 
 Set environment variables in your deployment dashboard:
 
 - `VITE_SUPABASE_URL`
 - `VITE_SUPABASE_ANON_KEY`
+- `VITE_REVIEW_API_URL`
 
-After deployment, verify:
+After deployment, verify landing page loading, auth redirects, protected route behavior, backend health, and review creation after sign-in.
 
-- Landing page loads
-- Deep links refresh without 404
-- Auth redirects are configured in Supabase
-- Protected routes redirect correctly when logged out
-- Review creation works after sign-in
-
----
-
-## 🐞 Troubleshooting
+## Troubleshooting
 
 ### Blank page or Supabase config warning
 
-Make sure `.env` exists and contains:
+Make sure `frontend/.env` exists and contains Supabase values, then restart the dev server.
 
-```env
-VITE_SUPABASE_URL=...
-VITE_SUPABASE_ANON_KEY=...
+### Backend health check fails
+
+Start the backend:
+
+```bash
+npm run backend
 ```
 
-Then restart the dev server.
+Then open:
+
+```text
+http://127.0.0.1:8787/api/health
+```
 
 ### Protected pages redirect to sign-in
 
@@ -278,53 +287,23 @@ This is expected when no user is logged in. Sign in or create an account through
 
 ### Review creation fails
 
-Check:
+Check that Supabase migrations are applied, RLS policies exist, the user is authenticated, and the backend is running or browser fallback is enabled.
 
-- Supabase migrations are applied
-- RLS policies exist
-- User is authenticated
-- Browser console and Supabase logs for insert errors
-
-### OAuth sign-in fails
-
-Check:
-
-- Provider is enabled in Supabase Auth
-- Redirect URLs include local and deployed URLs
-- OAuth client ID/secret are configured in Supabase
-
-### Vite port already in use
-
-```powershell
-netstat -ano | findstr :5173
-Stop-Process -Id <PID> -Force
-```
-
----
-
-## ✅ Production Readiness Checklist
+## Production Readiness Checklist
 
 - [ ] Apply all Supabase migrations
 - [ ] Configure Supabase Auth redirect URLs
 - [ ] Enable required OAuth providers
-- [ ] Add real Terms, Privacy, Docs, Pricing, and Status links
-- [ ] Add screenshots to `src/assets/screenshots`
-- [ ] Add backend AI review service or Supabase Edge Function
+- [ ] Deploy the backend API
+- [ ] Add provider-backed AI review on the backend
+- [ ] Add automated tests for auth guards, analyzer behavior, and review creation
 - [ ] Resolve remaining npm audit advisories
 - [ ] Clean remaining ESLint warnings
-- [ ] Add automated tests for auth guards, analyzer behavior, and review creation
+- [ ] Update screenshots after UI changes
 
----
+## Contributing
 
-## 🤝 Contributing
-
-PRs are welcome!
-
-1. Fork the repo
-2. Create a feature branch
-3. Commit with meaningful messages
-4. Run quality checks
-5. Open a pull request
+PRs are welcome.
 
 ```bash
 npm run typecheck
@@ -332,12 +311,8 @@ npm run lint
 npm run build
 ```
 
----
-
-## 📄 License
+## License
 
 MIT
 
----
-
-**Reviewly AI - AI Code Review Automation Platform** © 2026 - Created by Vishant Chaudhary
+Reviewly AI, created by Vishant Chaudhary.
