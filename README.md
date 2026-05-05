@@ -9,9 +9,6 @@ Reviewly AI is a modern, full-stack **AI-assisted code review** web app with a p
 
 ## 📸 Screenshots
 
-> Add screenshots after deployment or local UI capture. Recommended paths:
-> `src/assets/screenshots/landing.png`, `src/assets/screenshots/dashboard.png`, and `src/assets/screenshots/review.png`.
-
 ### 🏠 Landing Page
 
 <p align="center">
