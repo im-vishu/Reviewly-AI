@@ -1,59 +1,59 @@
-# Reviewly AI
+# ReviewlyAI - AI Code Review Automation
 
-Reviewly AI is a full-stack AI-assisted code review workspace built with React, TypeScript, Vite, Tailwind CSS, Supabase, and a lightweight Node backend. The app gives teams a fast dashboard for launching reviews, saving reports, tracking review history, and preparing repository-based review workflows.
+ReviewlyAI is a full-stack AI-assisted code review workspace built with React, TypeScript, Vite, Tailwind CSS, Supabase, and a lightweight Node backend. The app gives teams a fast dashboard for launching reviews, saving reports, tracking review history, and preparing repository-based review workflows.
 
-Live demo: Coming soon  
-Repository: https://github.com/im-vishu/Reviewly-AI
+🌐 Live demo: Coming soon  
+📦 Repository: https://github.com/im-vishu/Reviewly-AI
 
-## Screenshots
+## 📸 Screenshots
 
-### Landing Page
+### 🏠 Landing Page
 
 <p align="center">
   <img src="frontend/src/assets/screenshots/landingpage.png" alt="Reviewly AI landing page" width="900" />
 </p>
 
-### Dashboard
+### 📊 Dashboard
 
 <p align="center">
   <img src="frontend/src/assets/screenshots/dashboard.png" alt="Reviewly AI dashboard" width="900" />
 </p>
 
-### Review Details
+### 🔎 Review Details
 
 <p align="center">
   <img src="frontend/src/assets/screenshots/reviewdetails.png" alt="Reviewly AI review details" width="900" />
 </p>
 
-## Features
+## ✨ Features
 
-- Supabase email/password authentication flows
-- Protected dashboard shell with responsive sidebar navigation
-- Lovable/Bolt-style dashboard for launching review work quickly
-- Backend analysis API with a browser-side fallback analyzer
-- Code review creation by pasting source code
-- Rule-based issue detection for hardcoded secrets, `eval`, console logs, unsafe HTML assignment, and swallowed exceptions
-- Review details page with Monaco Editor read-only code views
-- Review history with search, sorting, and incremental loading
-- Profile management with Supabase-backed profile updates
-- Repository, team, and notification workspace pages
-- Markdown export for review reports
-- Supabase RLS migrations for per-user and team-scoped data access
+- 🔐 Supabase email/password authentication flows
+- 🧭 Protected dashboard shell with responsive sidebar navigation
+- ⚡ Lovable/Bolt-style dashboard for launching review work quickly
+- 🧠 Backend analysis API with a browser-side fallback analyzer
+- 📝 Code review creation by pasting source code
+- 🚨 Rule-based issue detection for hardcoded secrets, `eval`, console logs, unsafe HTML assignment, and swallowed exceptions
+- 🖥️ Review details page with Monaco Editor read-only code views
+- 📚 Review history with search, sorting, and incremental loading
+- 👤 Profile management with Supabase-backed profile updates
+- 🧩 Repository, team, and notification workspace pages
+- 📤 Markdown export for review reports
+- 🛡️ Supabase RLS migrations for per-user and team-scoped data access
 
-## Tech Stack
+## 🧰 Tech Stack
 
-- React 18
-- TypeScript
-- Vite
-- Tailwind CSS
-- React Router
-- Supabase
-- Node HTTP backend
-- Monaco Editor
-- ESLint
-- Lucide React
+- ⚛️ React 18
+- 🔷 TypeScript
+- ⚡ Vite
+- 🎨 Tailwind CSS
+- 🧭 React Router
+- 🗄️ Supabase
+- 🟩 Node HTTP backend
+- 👨‍💻 Monaco Editor
+- ✅ ESLint
+- 🎯 Lucide React
 
-## Project Structure
+## 🗂️ Project Structure
 
 ```text
 .
@@ -77,7 +77,7 @@ Repository: https://github.com/im-vishu/Reviewly-AI
 `-- README.md
 ```
 
-## System Architecture
+## 🏗️ System Architecture
 
 ```mermaid
 flowchart LR
@@ -92,7 +92,7 @@ flowchart LR
   DB --> Reports
 ```
 
-### Runtime Flow
+### 🔄 Runtime Flow
 
 1. The user signs in through Supabase Auth.
 2. The protected React app loads dashboard, history, repository, team, and notification data from Supabase.
@@ -101,7 +101,7 @@ flowchart LR
 5. The frontend stores the review and issue rows in Supabase under the authenticated user.
 6. Realtime Supabase subscriptions refresh dashboard review data.
 
-### Backend API
+### 🔌 Backend API
 
 The backend is intentionally small and dependency-free so it can run locally without adding a heavy server framework.
 
@@ -121,7 +121,7 @@ Request body for analysis:
 
 The frontend uses `frontend/src/lib/reviewApi.ts`. If `VITE_REVIEW_API_URL` is missing or the backend is unavailable, it falls back to the local browser analyzer in `frontend/src/lib/analyzer.ts`.
 
-## Environment Variables
+## 🔐 Environment Variables
 
 Create a `.env` file in `frontend/`:
 
@@ -135,7 +135,7 @@ VITE_REVIEW_API_URL=http://127.0.0.1:8787/api
 
 Public pages can render without Supabase values, but authentication, profile updates, review creation, history, notifications, and workspace data require a configured Supabase project.
 
-## Supabase Setup
+## 🗄️ Supabase Setup
 
 Apply the migration files in `backend/supabase/migrations` in order:
 
@@ -147,21 +147,21 @@ Apply the migration files in `backend/supabase/migrations` in order:
 
 These migrations create profiles, teams, team members, reviews, review issues, connected repositories, pull request review metadata, custom rules, user settings, notifications, API keys, audit logs, and row-level security policies.
 
-## Setup & Development
+## 🚀 Setup & Development
 
-### Prerequisites
+### ✅ Prerequisites
 
 - Node.js >= 18
 - npm >= 9
 - Supabase project for full app functionality
 
-### 1. Install dependencies
+### 1. 📦 Install dependencies
 
 ```bash
 npm install
 ```
 
-### 2. Configure environment variables
+### 2. 🔧 Configure environment variables
 
 ```bash
 copy frontend\.env.example frontend\.env
@@ -169,7 +169,7 @@ copy frontend\.env.example frontend\.env
 
 Then update `frontend/.env` with your Supabase project values.
 
-### 3. Run the backend
+### 3. 🟩 Run the backend
 
 ```bash
 npm run backend
@@ -181,7 +181,7 @@ The API runs at:
 http://127.0.0.1:8787
 ```
 
-### 4. Run the frontend
+### 4. 🖥️ Run the frontend
 
 ```bash
 npm run dev
@@ -193,7 +193,7 @@ Open:
 http://127.0.0.1:5173
 ```
 
-## Quality Checks
+## 🧪 Quality Checks
 
 ```bash
 npm run typecheck
@@ -203,20 +203,20 @@ npm run build
 
 Current known state:
 
-- TypeScript passes
-- Production build passes
-- ESLint passes
+- ✅ TypeScript passes
+- ✅ Production build passes
+- ✅ ESLint passes
 
-## Routes
+## 🧭 Routes
 
-### Public Routes
+### 🌍 Public Routes
 
 - `/` - Landing page
 - `/auth/signin` - Sign in
 - `/auth/signup` - Sign up
 - `*` - 404 fallback
 
-### Protected Routes
+### 🔒 Protected Routes
 
 - `/dashboard` - AI review workspace and recent reviews
 - `/profile` - Account profile
@@ -227,7 +227,7 @@ Current known state:
 - `/teams` - Teams
 - `/notifications` - User notifications
 
-## Analyzer Notes
+## 🧠 Analyzer Notes
 
 The shared browser analyzer is implemented in:
 
@@ -243,7 +243,7 @@ backend/index.mjs
 
 For production-grade AI review, keep provider keys on the backend or in Supabase Edge Functions. Do not expose private LLM provider keys in the browser.
 
-## Deploying
+## ☁️ Deploying
 
 This Vite app can be deployed to platforms like Vercel, Netlify, or Cloudflare Pages. The Node backend can be deployed separately to a Node-capable host.
 
@@ -261,13 +261,13 @@ Set environment variables in your deployment dashboard:
 
 After deployment, verify landing page loading, auth redirects, protected route behavior, backend health, and review creation after sign-in.
 
-## Troubleshooting
+## 🛠️ Troubleshooting
 
-### Blank page or Supabase config warning
+### ⚠️ Blank page or Supabase config warning
 
 Make sure `frontend/.env` exists and contains Supabase values, then restart the dev server.
 
-### Backend health check fails
+### 🩺 Backend health check fails
 
 Start the backend:
 
@@ -281,15 +281,15 @@ Then open:
 http://127.0.0.1:8787/api/health
 ```
 
-### Protected pages redirect to sign-in
+### 🔐 Protected pages redirect to sign-in
 
 This is expected when no user is logged in. Sign in or create an account through Supabase Auth.
 
-### Review creation fails
+### 🚧 Review creation fails
 
 Check that Supabase migrations are applied, RLS policies exist, the user is authenticated, and the backend is running or browser fallback is enabled.
 
-## Production Readiness Checklist
+## ✅ Production Readiness Checklist
 
 - [ ] Apply all Supabase migrations
 - [ ] Configure Supabase Auth redirect URLs
@@ -301,7 +301,7 @@ Check that Supabase migrations are applied, RLS policies exist, the user is auth
 - [ ] Clean remaining ESLint warnings
 - [ ] Update screenshots after UI changes
 
-## Contributing
+## 🤝 Contributing
 
 PRs are welcome.
 
@@ -311,8 +311,8 @@ npm run lint
 npm run build
 ```
 
-## License
+## 📄 License
 
 MIT
 
-Reviewly AI, created by Vishant Chaudhary.
+ReviewlyAI - AI Code Review Automation, created by Vishant Chaudhary.
