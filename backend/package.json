@@ -1,0 +1,10 @@
+{
+  "name": "reviewly-ai-backend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node index.mjs",
+    "dev": "node index.mjs"
+  }
+}

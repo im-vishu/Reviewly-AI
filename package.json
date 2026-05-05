@@ -15,11 +15,13 @@
   "homepage": "https://github.com/im-vishu/Reviewly-AI#readme",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview",
-    "typecheck": "tsc --noEmit -p tsconfig.app.json"
+    "dev": "vite frontend",
+    "frontend": "vite frontend",
+    "backend": "node backend/index.mjs",
+    "build": "vite build frontend",
+    "lint": "eslint frontend/src --config frontend/eslint.config.js",
+    "preview": "vite preview frontend",
+    "typecheck": "tsc --noEmit -p frontend/tsconfig.app.json"
   },
   "dependencies": {
     "@monaco-editor/react": "^4.7.0",
