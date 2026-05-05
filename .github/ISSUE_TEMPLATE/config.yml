@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Project repository
+    url: https://github.com/im-vishu/Reviewly-AI
+    about: View the Reviewly AI repository.
